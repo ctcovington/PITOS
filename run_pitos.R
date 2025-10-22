@@ -1,15 +1,17 @@
-library(PITOS) 
+# run_pitos.R
+library(PITOS)
 
 args <- commandArgs(trailingOnly=TRUE)
 if (length(args) != 1) {
   stop("Usage: Rscript run_pitos.R <filepath>", call.=FALSE)
 }
 
-data <- read.table(args[1])[[1]]
-n <- length(data)
+# read.table reads the entire matrix of simulations
+# Each column is treated as a separate simulation
+data_matrix <- read.table(args[1])
 
-# Use a fixed set of pairs for a deterministic test
-p_value <- pitos(data)
+# Apply the pitos function to each column of the matrix
+p_values <- apply(data_matrix, 2, pitos)
 
-# Print only the final p-value
-cat(p_value)
+# Print all resulting p-values, separated by newlines
+cat(p_values, sep = "\n")

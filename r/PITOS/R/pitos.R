@@ -1,4 +1,7 @@
-#' @title Paired-Index Test of Uniformity (PITOS)
+#' @importFrom stats pbeta pcauchy qbeta
+NULL
+
+#' @title PITOS
 #' @description Performs the PITOS test to check if a numeric vector follows a
 #'   uniform distribution on the interval (0,1).
 #'
@@ -81,8 +84,18 @@ generate_raw_halton_sequence <- function(N, n) {
   return(cbind(x_raw, y_raw))
 }
 
-#' @description Transforms the raw Halton sequence using Beta quantiles.
-#' @noRd
+#' @title Generate a Weighted Halton Sequence
+#' @description Generates a 2D Halton sequence and transforms it using Beta
+#'   quantile functions to create a weighted distribution of pairs. This is
+#'   useful for creating a non-uniform but evenly distributed set of index
+#'   pairs for testing.
+#'
+#' @param N The number of points to generate in the Halton sequence.
+#' @param n The upper limit for the indices (e.g., the length of the vector
+#'   being tested).
+#'
+#' @return A two-column matrix where each row is a pair of indices `(start, finish)`.
+#' @export
 generate_weighted_halton_sequence <- function(N, n) {
   raw_halton <- generate_raw_halton_sequence(N, n)
 

@@ -23,7 +23,7 @@ def pitos(
 
     if pairs_sequence is None:
         N = round(10 * n * np.log(n))
-        pairs_sequence = _generate_weighted_halton_sequence(N, n)
+        pairs_sequence = generate_weighted_halton_sequence(N, n)
 
     _validate_pairs(pairs_sequence, n)
 
@@ -55,7 +55,7 @@ def _generate_raw_halton_sequence(N: int, n: int) -> np.ndarray:
     y_raw = np.array([_halton_1d(val, base_y) for val in i])
     return np.column_stack((x_raw, y_raw))
 
-def _generate_weighted_halton_sequence(N: int, n: int) -> List[Tuple[int, int]]:
+def generate_weighted_halton_sequence(N: int, n: int) -> List[Tuple[int, int]]:
     raw_halton = _generate_raw_halton_sequence(N, n)
 
     weighted_x = beta.ppf(raw_halton[:, 0], 0.7, 0.7)

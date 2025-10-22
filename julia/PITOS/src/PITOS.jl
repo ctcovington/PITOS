@@ -7,7 +7,7 @@ module PITOS
     # export public functions
     export pitos
 
-    # --- Minimal Dependencies ---
+    # --- minimal dependencies ---
 
     """
         halton_1d(i::Int, b::Int)
@@ -140,7 +140,7 @@ module PITOS
         return nothing
     end
 
-    # --- Generalized Target Function ---
+    # --- full PITOS implementation ---
 
     """
         pitos(x::Vector{Float64}; pairs_sequence::Union{Vector{Tuple{Int, Int}}, Nothing}=nothing)

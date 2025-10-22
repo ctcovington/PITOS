@@ -2,34 +2,32 @@
 % Please edit documentation in R/pitos.R
 \name{pitos}
 \alias{pitos}
-\title{Probability Integral Transform Order Statistics (PITOS) Test}
+\title{PITOS}
 \usage{
-pitos(x, N = NULL, pairs_sequence = NULL, pairs_sampling_probabilities = NULL)
+pitos(x, pairs_sequence = NULL)
 }
 \arguments{
 \item{x}{A numeric vector of values to test.}
 
-\item{N}{The number of Monte Carlo samples. If NULL, a default value is calculated. Ignored in deterministic mode.}
-
-\item{pairs_sequence}{A list where each element is a 2-element vector \code{c(i, j)} specifying a pair of order statistic indices.}
-
-\item{pairs_sampling_probabilities}{A numeric vector of sampling probabilities for each pair in \code{pairs_sequence}.}
+\item{pairs_sequence}{An optional two-column matrix or data frame where each
+row represents a pair of indices \verb{(start, finish)} to be tested. If \code{NULL}
+(the default), a weighted Halton sequence is generated automatically.}
 }
 \value{
-A single p-value from the Cauchy combination test.
+A single p-value from the Cauchy combination test. A small p-value
+suggests the data does not follow a U(0,1) distribution.
 }
 \description{
-Performs a goodness-of-fit test for the uniform distribution on (0,1).
-The test operates in one of three modes:
-\enumerate{
-\item \strong{Default Monte Carlo}: If \code{pairs_sequence} and \code{pairs_sampling_probabilities} are both \code{NULL}, a default sequence is generated and sampled \code{N} times.
-\item \strong{Custom Monte Carlo}: If \code{pairs_sequence} and \code{pairs_sampling_probabilities} are both provided, the custom sequence is sampled \code{N} times.
-\item \strong{Deterministic}: If \code{pairs_sequence} is provided but \code{pairs_sampling_probabilities} is \code{NULL}, the test iterates through every pair exactly once. The \code{N} argument is ignored.
-}
+Performs the PITOS test to check if a numeric vector follows a
+uniform distribution on the interval (0,1).
 }
 \examples{
-set.seed(42)
-uniform_data <- runif(50)
+# Generate some uniform data
+set.seed(123)
+uniform_data <- runif(20)
 pitos(uniform_data)
 
+# Generate data that is not uniform
+non_uniform_data <- rbeta(20, 2, 1)
+pitos(non_uniform_data)
 }

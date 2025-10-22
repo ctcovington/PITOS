@@ -1,3 +1,4 @@
+# run_pitos.py
 import sys
 import numpy as np
 from pitos import pitos
@@ -8,12 +9,16 @@ def main():
         sys.exit(1)
 
     filepath = sys.argv[1]
-    data = np.loadtxt(filepath)
+    # Load the entire matrix of simulations.
+    # np.atleast_2d ensures it works even if there's only one row.
+    data_matrix = np.atleast_2d(np.loadtxt(filepath))
 
-    p_value = pitos(data)
+    # Calculate p-value for each row (each simulation)
+    p_values = np.apply_along_axis(pitos, 1, data_matrix)
 
-    # Print only the final p-value, formatted for consistency
-    print(f"{p_value:.18f}")
+    # Print each p-value on a new line
+    for p_value in p_values:
+        print(f"{p_value:.18f}")
 
 if __name__ == "__main__":
     main()

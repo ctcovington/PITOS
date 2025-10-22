@@ -123,10 +123,12 @@ julia validate_packages.jl
 
 ### Package-Specific Tests
 
+Navigate to the root of the repository and run the following commands:
+
 -   **Julia**:
-    To run the Julia package's test suite, navigate to the `julia/PITOS` directory and run:
+    To run the Julia package's test suite, run
     ```sh
-    julia --project -e 'import Pkg; Pkg.test()'
+    julia --project=julia/PITOS -e 'using Pkg; Pkg.test()'
     ```
 
 -   **R**:
